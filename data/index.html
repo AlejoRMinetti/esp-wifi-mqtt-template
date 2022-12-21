@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="ESP32 template Layout Shifter">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-template</title>
+    <!-- Mobile first -->
+    <link rel="stylesheet" href="./css/mobile.css">
+    <link rel="stylesheet" href="./css/tablet.css" media="only screen and (min-width:768px)">
+    <link rel="stylesheet" href="./css/desktop.css" media="only screen and (min-width:1024px)">
+    <script type="text/javascript" src="./script.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1><strong>ESP32</strong></h1>
+            <div class="flag"></div>
+        </div>
+        <nav class="navbar">
+            <ul class="menu">
+                <li>
+                    <a href="./index.html">HOME</a>
+                </li>
+                <li>
+                    <a href="./wificonfig.html">CONFIG</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
+        <section class="actuadores">
+            <!-- card actuador with title, image and accion button -->
+            <div class="card-actuador">
+                <div class="card-header">
+                    <h3 id="titleLED">LED build-in</h3>
+                </div>
+                <button id="ledButton" class="button-state" onclick="toggleLED()">
+                    <img class="button-image" src="./images/blue button.png" alt="Blue Button">
+                    <span class="button-text">Apretame!</span>
+                    <span class="btn-actuador-icon">
+                        <i class="fas fa-power-off"></i>
+                    </span>
+                </button>
+            </div>
+        </section>
+        <aside class="actuadores-config" >
+            <!-- configuracion de los tiempos de encedido y apagado -->
+            <div class="card-config">
+                <div class="card-header">
+                    <h3 id="lesState">LED State</h3>
+                </div>
+                <div class="card-img">
+                    <figure class="actuadores-images" id="led">
+                        <img src="./images/LED off.png" alt="LED STATE">
+                    </figure>
+                </div>
+        </aside>
+    </main>
+    <footer class="footer">
+        <p>ESP32 template for a good beginning</p>
+    </footer>
+</body>
+
+</html>

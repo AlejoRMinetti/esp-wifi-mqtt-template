@@ -5,9 +5,8 @@
 
 WiFiServer server(80);
 // Set these to your desired credentials.
-const char *ssid = "AP ejemplo";
-const char *password = "123";
-
+const char *ssid = "AP ESP32";
+const char *password = "123456";
 
 void serverInit(){
     // You can remove the password parameter if you want the AP to be open.
@@ -19,35 +18,7 @@ void serverInit(){
   server.begin();
 }
 
-void send404(WiFiClient client){
-    client.print("<h1>ERROR 404 from the ucontroller</h1><br>");
-    return;
-}
-
 ////////////////////// WIFI config /////////////////////////////
-
-void sendConfigurationPage(WiFiClient client) { 
-    // Envía el encabezado HTTP y el código HTML de la página 
-    client.println("HTTP/1.1 200 OK");
-    client.println("Content-Type: text/html");
-    client.println();
-    client.println("<!DOCTYPE HTML>");
-    client.println("<html>");
-    client.println("<head><title>Wi-Fi Configuration</title></head>");
-    client.println("<body>");
-    client.println("<h1>Configure Wi-Fi</h1>");
-    client.println("<form method='get'action='/save'>");
-    client.println("<label for='ssid'>SSID:</label>");
-    client.println("<input type='text'name='ssid'>");
-    client.println("<br>");
-    client.println("<label for='password'>Password:</label>");
-    client.println("<input type='password'name='password'>");
-    client.println("<br>");
-    client.println("<input type='submit'value='Save'>");
-    client.println("</form>");
-    client.println("</body>");
-    client.println("</html>");
- } 
 
 bool saveWiFiConfiguration(String ssid, String password) { 
     // Abre el archivo de configuración en la memoria flash
@@ -55,7 +26,8 @@ bool saveWiFiConfiguration(String ssid, String password) {
     if (!file) { 
         Serial.println("Error al abrir el archivo de configuración del Wi-Fi.");
         return false;
-    } // Escribe el SSID y la contraseña en el archivo file.println(ssid);
+    } // Escribe el SSID y la contraseña en el archivo 
+    file.println(ssid);
     file.println(password);
     file.close();
     return true;
@@ -75,19 +47,6 @@ String getValue(String request, String name) {
     return request.substring(start, end);
  } 
 
-void sendSuccessPage(WiFiClient client) { // Envía el encabezado HTTP y el código HTML de la página client.println("HTTP/1.1 200 OK");
- client.println("Content-Type: text/html");
- client.println();
- client.println("<!DOCTYPE HTML>");
- client.println("<html>");
- client.println("<head><title>Success</title></head>");
- client.println("<body>");
- client.println("<h1>Success</h1>");
- client.println("<p>Wi-Fi configuration saved successfully!</p>");
- client.println("</body>");
- client.println("</html>");
- } 
-
 void processSaveRequest(WiFiClient client, String request) { 
     // Obtiene el SSID y la contraseña del Wi-Fi del formulario 
     String ssid = getValue(request, "ssid");
@@ -100,8 +59,7 @@ void processSaveRequest(WiFiClient client, String request) {
 
 enum Page {
   INDEX,
-  SETUP,
-  NETWORK_CONFIG,
+  WIFI_CONFIG,
   SUCCESS,
   ERROR
 };
@@ -110,22 +68,10 @@ void sendPage(WiFiClient client, Page page) {
   // Send the appropriate response based on the requested page
   switch (page) {
     case INDEX:
-      client.println("HTTP/1.1 200 OK");
-      client.println("Content-Type: text/html");
-      client.println("");
-      client.println("<h1>Welcome to the WiFi Configuration page!</h1>");
+      sendFile(client, "./data/index.html");
       break;
-    case SETUP:
-      client.println("HTTP/1.1 200 OK");
-      client.println("Content-Type: text/html");
-      client.println("");
-      client.println("<h1>Setup page</h1>");
-      break;
-    case NETWORK_CONFIG:
-      client.println("HTTP/1.1 200 OK");
-      client.println("Content-Type: text/html");
-      client.println("");
-      client.println("<h1>Network Configuration page</h1>");
+    case WIFI_CONFIG:
+      sendFile(client, "./data/wificonfig.html");
       break;
     case SUCCESS:
       client.println("HTTP/1.1 200 OK");
@@ -142,32 +88,10 @@ void sendPage(WiFiClient client, Page page) {
     }
 }
 
+enum Page paginaActual = INDEX;
 
 ////////////////// process all requests ///////////////////////////
 void processHTMLRequest() {
-/*
-  // Read the request
-  String request = client.readStringUntil('\r');
-  Serial.println(request);
-
-  // Parse the request
-  int pos = request.indexOf(' ');
-  String method = request.substring(0, pos);
-  String url = request.substring(pos + 1, request.indexOf(' ', pos + 1));
-
-  // Send the appropriate page
-  if (url == "/") {
-    sendPage(client, INDEX);
-  } else if (url == "/setup") {
-    sendPage(client, SETUP);
-  } else if (url == "/network-config") {
-    sendPage(client, NETWORK_CONFIG);
-  } else {
-    sendPage(client, ERROR);
-  }
-
-*/
-
     WiFiClient client = server.available();   // listen for incoming clients
     if (client) {
         Serial.println("New Client.");           // print a message out the serial port
@@ -181,19 +105,7 @@ void processHTMLRequest() {
             // that's the end of the client HTTP request, so send a response:
             if (currentLine.length() == 0) {
                 Serial.println("enviando respuesta...");
-                // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-                // and a content-type so the client knows what's coming, then a blank line:
-                client.println("HTTP/1.1 200 OK");
-                client.println("Content-type:text/html");
-                client.println();
-                client.print("<!DOCTYPE html><html><head><title>ESP32</title></head><body>");
-                client.print("<h1>Click <a href=\"/config\">CONFIG</a> to connect to local WiFi.</h1><br>");
-                // the content of the HTTP response follows the header:
-                client.print("<h1>Click <a href=\"/H\">here</a> to turn OFF the LED.</h1><br>");
-                client.print("<h1>Click <a href=\"/L\">here</a> to turn ON the LED.</h1><br>");
-
-                // The HTTP response ends with another blank line:
-                client.println();
+                sendPage(client,paginaActual);
                 // break out of the while loop:
                 break;
             } else {
@@ -217,18 +129,5 @@ void processHTMLRequest() {
         // close the connection:
         client.stop();
         Serial.println("Client Disconnected.");
-
-
-        // else if (request.startsWith("/save?")) { 
-        //     // Si se solicitó la ruta '/save', procesa la solicitud y
-        //     // guarda la configuración del Wi-Fi
-        //     processSaveRequest(client, request);
-        // }else if (request == "/success") { 
-        //     // Si se solicitó la ruta '/success', envía la página de éxito al cliente
-        //     sendSuccessPage(client);
-        // } else { // Si se solicitó otra página,
-        //     // envía un mensaje de error
-        //     send404(client);
-        // }
     }   
 }
