@@ -1,0 +1,189 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border: 1px solid steelblue;
+    align-items: center;
+}
+
+.logo {
+    /*     display: flex;
+    align-items: center; */
+    margin-bottom: 8px;
+}
+
+.logo strong {
+    font-family: 'Oswald', 'Roboto', sans-serif;
+    color: #1a0aff;
+    font-size: 5rem;
+}
+
+.flag {
+    background: linear-gradient(#1a0aff, #21d3ff, #6ff08b);
+    height: 5rem;
+}
+
+/* NavBar */
+
+.menu {
+    font-family: 'Oswald', 'Roboto', sans-serif;
+    color: #0a91ff;
+    display: flex;
+    list-style: none;
+}
+
+.menu li {
+    margin: 0 5px;
+}
+
+.menu li a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.main {
+    width: 100%;
+    padding: 20px 10px;
+    border: 1px solid lightskyblue;
+    text-align: center;
+}
+
+.figuraPpal img {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 15px;
+}
+
+/* section principal */
+
+.actuadores {
+    padding: 12px 8px;
+}
+
+.actuadores h2 {
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.card-actuador {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgb(198, 194, 255);
+    border-radius: 12px;
+}
+
+
+.button-state {
+    /* center */
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #008CBA;
+    border-radius: 12px;
+    color: white;
+    padding: 16px 40px;
+    font-size: 30px;
+    margin: 8px;
+    cursor: pointer;
+}
+/* button styles */
+.button-image {
+    width: 80px;
+    height: 80px;
+    /* Position the image next to the text */
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+ 
+/* Add a hover effect for the button */
+.button-image:hover {
+/* Use a transform to scale the button up */
+transform: scale(1.2);
+/* Use a transition to smoothly animate the transformation */
+transition: transform 0.5s ease-out;
+}
+
+
+
+/* aside configuration */
+
+.card-led{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid rgb(142, 135, 156);
+    align-self: center;
+    justify-content: center;
+    padding: 10px;
+    font-family: "Lucida Console", monospace;
+    text-align: center;
+}
+
+.card-led-off {
+    background-color: rgb(0, 30, 181);
+    color: aliceblue;
+}
+.card-led-on {
+    background-color: rgb(150, 246, 255);
+    color: rgb(15, 0, 59);
+}
+
+
+
+/* 
+.config-encendido {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #014d01;
+    border-radius: 12px;
+    color: white;
+    padding: 16px 40px;
+    font-size: 20px;
+    margin: 8px;
+}
+
+.config-apagado {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #5e0101;
+    border-radius: 12px;
+    color: white;
+    padding: 16px 40px;
+    font-size: 20px;
+    margin: 8px;
+} 
+*/
+
+
+.footer {
+    display: flex;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid rgb(75, 242, 122);
+    justify-content: center;
+    align-items: center;
+}
+
+.footer p {
+    font-weight: 700;
+}
+

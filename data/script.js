@@ -19,4 +19,14 @@ function toggleLED() {
       // Log any errors that occur
       console.error(error);
     });
+
+  // TODO: cambiar la imagen unicamente si se recibe respuesta OK
+  // o imagen de error
+  if(ledOn){
+    document.getElementById("card-led-state").className = "card-led card-led-on";
+    document.getElementById("LED-state-img").src="./images/LED on.png"
+  }else{
+    document.getElementById("card-led-state").className = "card-led card-led-off";
+    document.getElementById("LED-state-img").src="./images/LED off.png"
+  }
 }

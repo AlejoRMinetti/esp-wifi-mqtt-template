@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESP32-template</title>
     <!-- Mobile first -->
-    <link rel="stylesheet" href="./css/mobile.css">
+    <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/tablet.css" media="only screen and (min-width:768px)">
     <link rel="stylesheet" href="./css/desktop.css" media="only screen and (min-width:1024px)">
     <script type="text/javascript" src="./script.js"></script>
@@ -39,7 +39,7 @@
                 <div class="card-header">
                     <h3 id="titleLED">LED build-in</h3>
                 </div>
-                <button id="ledButton" class="button-state" onclick="toggleLED()">
+                <button class="button-state" onclick="toggleLED()">
                     <img class="button-image" src="./images/blue button.png" alt="Blue Button">
                     <span class="button-text">Apretame!</span>
                     <span class="btn-actuador-icon">
@@ -50,14 +50,13 @@
         </section>
         <aside class="actuadores-config" >
             <!-- configuracion de los tiempos de encedido y apagado -->
-            <div class="card-config">
-                <div class="card-header">
+                <div id="card-led-state" class="card-led card-led-off">
                     <h3 id="lesState">LED State</h3>
-                </div>
-                <div class="card-img">
-                    <figure class="actuadores-images" id="led">
-                        <img src="./images/LED off.png" alt="LED STATE">
-                    </figure>
+                    <div class="card-img">
+                        <figure class="actuadores-images" id="led">
+                            <img id="LED-state-img" src="./images/LED off.png" alt="LED STATE">
+                        </figure>
+                    </div>
                 </div>
         </aside>
     </main>
