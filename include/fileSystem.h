@@ -16,6 +16,7 @@ bool sendFile(WiFiClient client, String path) {
     // Envía el contenido del archivo al cliente 
     while (file.available()) { 
         client.write(file.read());
+        // Serial.print(file.read());
     }
     file.close();
     return true;

@@ -1,7 +1,7 @@
 #include "serverWeb.h"
 
 void wifi_setup() {
-  // FileSysInit();
+  FileSysInit();
 
   // TODO try read credencial for local wifi and start in AT mode
   

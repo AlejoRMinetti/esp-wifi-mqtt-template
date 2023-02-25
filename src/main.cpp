@@ -1,3 +1,4 @@
+#include <Arduino.h>
 // App libraries
 #include "perifericos.h"
 #include "wifiapp.h"
